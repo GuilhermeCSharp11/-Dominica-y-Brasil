@@ -1,94 +1,77 @@
 -- ====================================================================
---            BRASILNICA UNIVERSAL HUB [PREMIUM v3.0 - ORION UI]
+--            BRASILNICA BLOX FRUITS HUB [PREMIUM v4.0 - ORION UI]
 -- ====================================================================
 
--- 1. Carrega a Biblioteca Visual Profissional (Orion Library)
+-- 1. Inicializa a Biblioteca de Interface Gráfica Avançada
 local OrionLib = loadstring(game:HttpGet(('https://githubusercontent.com')))()
 
--- Configurações Globais salvando os estados
-getgenv().BrasilnicaConfig = {
-    AutoChest = false,
-    FarmDistance = 5,
-    TweenSpeed = 120,
-    InfiniteJump = false,
-    Noclip = false,
-    WalkSpeedActive = false,
-    SpeedValue = 16,
-    JumpPowerActive = false,
-    JumpValue = 50
-}
-
--- 2. Cria a Janela Principal que o jogador vai ver na tela
+-- 2. Cria a Janela Principal com o nome atualizado
 local Window = OrionLib:MakeWindow({
-    Name = "Brasilnica Pro Hub v3.0", 
+    Name = "Javier y Gui Hub | Blox Fruits Edition", 
     HidePremium = false, 
     SaveConfig = true, 
-    ConfigFolder = "BrasilnicaConfig",
-    IntroText = "Carregando Brasilnica..."
+    ConfigFolder = "JavierGuiHubBF",
+    IntroText = "Carregando Javier y Gui Hub..."
 })
 
 -- ====================================================================
---                         ABA 1: AUTOMATIONS
+--                         ABA 1: MAIN FARMS
 -- ====================================================================
 local Tab1 = Window:MakeTab({
-    Name = "Automations",
+    Name = "Main Farm",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
--- Botão de Liga/Desliga para Coletar Baús
-Tab1:AddToggle({
-    Name = "Auto Farm: Coletar Baús",
-    Default = false,
-    Callback = function(Value)
-        getgenv().BrasilnicaConfig.AutoChest = Value
-    end    
+Tab1:AddLabel("Selecione o motor de Auto-Farm Avançado:")
+
+-- Executa o motor Redz Hub integrado
+Tab1:AddButton({
+    Name = "Ativar Auto-Farm Level (Redz Engine)",
+    Callback = function()
+        OrionLib:MakeNotification({Name = "Javier y Gui Hub", Content = "Iniciando motor de Farm... Aguarde!", Time = 4})
+        task.wait(1)
+        loadstring(game:HttpGet("https://githubusercontent.com"))()
+    end
 })
 
--- Slider para ajustar a velocidade do teleporte até o baú
-Tab1:AddSlider({
-    Name = "Velocidade do Farm (Tween)",
-    Min = 50,
-    Max = 300,
-    Default = 120,
-    Color = Color3.fromRGB(0, 0, 139),
-    Increment = 10,
-    ValueName = "studs/s",
-    Callback = function(Value)
-        getgenv().BrasilnicaConfig.TweenSpeed = Value
-    end    
+-- Executa o motor Hoho Hub integrado
+Tab1:AddButton({
+    Name = "Ativar Auto-Farm Alternativo (Hoho Engine)",
+    Callback = function()
+        OrionLib:MakeNotification({Name = "Javier y Gui Hub", Content = "Iniciando Hoho Engine...", Time = 4})
+        task.wait(1)
+        loadstring(game:HttpGet('https://githubusercontent.com'))()
+    end
 })
 
 -- ====================================================================
---                          ABA 2: PLAYER
+--                       ABA 2: PLAYER MODIFIERS
 -- ====================================================================
 local Tab2 = Window:MakeTab({
-    Name = "Player Modifiers",
+    Name = "Player",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
--- Botão Liga/Desliga para Atravessar Paredes
+-- Variáveis de Controle locais
+getgenv().BFConfig = {
+    InfJump = false,
+    WalkSpeed = 16
+}
+
+-- Pulo Infinito integrado diretamente
 Tab2:AddToggle({
-    Name = "Atravessar Paredes (Noclip)",
+    Name = "Pulo Infinito (Infinite Jump)",
     Default = false,
     Callback = function(Value)
-        getgenv().BrasilnicaConfig.Noclip = Value
+        getgenv().BFConfig.InfJump = Value
     end    
 })
 
--- Botão Liga/Desliga para Pulo Infinito
-Tab2:AddToggle({
-    Name = "Pulo Infinito (Inf Jump)",
-    Default = false,
-    Callback = function(Value)
-        getgenv().BrasilnicaConfig.InfiniteJump = Value
-    end    
-})
-
--- Modificador de Velocidade de Corrida
+-- Slider de Velocidade de Corrida
 Tab2:AddSlider({
-    Name = "Velocidade de Corrida",
+    Name = "Velocidade do Personagem",
     Min = 16,
     Max = 250,
     Default = 16,
@@ -96,109 +79,57 @@ Tab2:AddSlider({
     Increment = 5,
     ValueName = "Speed",
     Callback = function(Value)
-        if Value > 16 then
-            getgenv().BrasilnicaConfig.WalkSpeedActive = true
-            getgenv().BrasilnicaConfig.SpeedValue = Value
-        else
-            getgenv().BrasilnicaConfig.WalkSpeedActive = false
-            local char = game.Players.LocalPlayer.Character
-            if char and char:FindFirstChild("Humanoid") then char.Humanoid.WalkSpeed = 16 end
-        end
-    end    
-})
-
--- Modificador de Força do Pulo
-Tab2:AddSlider({
-    Name = "Força do Pulo",
-    Min = 50,
-    Max = 300,
-    Default = 50,
-    Color = Color3.fromRGB(0, 0, 139),
-    Increment = 5,
-    ValueName = "Power",
-    Callback = function(Value)
-        if Value > 50 then
-            getgenv().BrasilnicaConfig.JumpPowerActive = true
-            getgenv().BrasilnicaConfig.JumpValue = Value
-        else
-            getgenv().BrasilnicaConfig.JumpPowerActive = false
-            local char = game.Players.LocalPlayer.Character
-            if char and char:FindFirstChild("Humanoid") then char.Humanoid.JumpPower = 50 end
-        end
+        getgenv().BFConfig.WalkSpeed = Value
     end    
 })
 
 -- ====================================================================
---               MÓDULOS DE ENGENHARIA DE TRÁS DOS PANOS
+--                        ABA 3: CREDITS & INFO
+-- ====================================================================
+local Tab3 = Window:MakeTab({
+    Name = "Créditos",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+Tab3:AddLabel("Donos do Script: Javier y Gui")
+Tab3:AddLabel("Versão Atual: v4.0 Premium")
+
+Tab3:AddButton({
+    Name = "Copiar nosso Discord",
+    Callback = function()
+        if setclipboard then
+            setclipboard("https://discord.gg")
+            OrionLib:MakeNotification({Name = "Sucesso", Content = "Link do Discord copiado!", Time = 3})
+        end
+    end
+})
+
+-- ====================================================================
+--                SISTEMAS FÍSICOS EM SEGUNDO PLANOS
 -- ====================================================================
 
--- Sistema de Movimentação por Tween (Bypass)
-local function SafeTween(targetCFrame)
-    local character = game.Players.LocalPlayer.Character
-    if not character or not character:FindFirstChild("HumanoidRootPart") then return end
-    local rootPart = character.HumanoidRootPart
-    local distance = (rootPart.Position - targetCFrame.Position).Magnitude
-    local duration = distance / getgenv().BrasilnicaConfig.TweenSpeed
-    local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-    local tween = game:GetService("TweenService"):Create(rootPart, tweenInfo, {CFrame = targetCFrame})
-    tween:Play()
-    return tween
-end
-
--- Monitor do Noclip
-game:GetService("RunService").Stepped:Connect(function()
-    if getgenv().BrasilnicaConfig.Noclip or getgenv().BrasilnicaConfig.AutoChest then
-        local character = game.Players.LocalPlayer.Character
-        if character then
-            for _, part in pairs(character:GetChildren()) do
-                if part:IsA("BasePart") then part.CanCollide = false end
-            end
-        end
-    end
-end)
-
--- Monitor do Pulo Infinito
-game:GetService("UserInputService").JumpRequest:Connect(function()
-    if getgenv().BrasilnicaConfig.InfiniteJump then
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChildOfClass("Humanoid") then
-            character:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
-        end
-    end
-end)
-
--- Loop do Auto Farm de Baús
-task.spawn(function()
-    while task.wait(0.5) do
-        if getgenv().BrasilnicaConfig.AutoChest then
-            local targets = {}
-            for _, obj in pairs(workspace:GetDescendants()) do
-                if (obj:IsA("Part") or obj:IsA("MeshPart") or obj:IsA("Model")) and 
-                   (string.find(string.lower(obj.Name), "chest") or string.find(string.lower(obj.Name), "bau")) then
-                    local cframe = obj:IsA("Model") and obj:GetPivot() or obj.CFrame
-                    table.insert(targets, {Object = obj, CFrame = cframe})
-                end
-            end
-            for _, target in ipairs(targets) do
-                if not getgenv().BrasilnicaConfig.AutoChest then break end
-                if target.Object and target.Object.Parent then
-                    local currentTween = SafeTween(target.CFrame * CFrame.new(0, getgenv().BrasilnicaConfig.FarmDistance, 0))
-                    if currentTween then currentTween.Completed:Wait() task.wait(0.1) end
-                end
-            end
-        end
-    end
-end)
-
--- Loop dos Atributos do Humanoide
+-- Loop de Loops de Atributos do Jogador
 task.spawn(function()
     while task.wait(0.1) do
-        local character = game.Players.LocalPlayer.Character
-        if character and character:FindFirstChild("Humanoid") then
-            local humanoid = character.Humanoid
-            if getgenv().BrasilnicaConfig.WalkSpeedActive then humanoid.WalkSpeed = getgenv().BrasilnicaConfig.SpeedValue end
-            if getgenv().BrasilnicaConfig.JumpPowerActive then humanoid.JumpPower = getgenv().BrasilnicaConfig.JumpValue humanoid.UseJumpPower = true end
-        end
+        pcall(function()
+            local char = game.Players.LocalPlayer.Character
+            if char and char:FindFirstChild("Humanoid") then
+                char.Humanoid.WalkSpeed = getgenv().BFConfig.WalkSpeed
+            end
+        end)
+    end
+end)
+
+-- Interceptador do Pulo Infinito
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if getgenv().BFConfig.InfJump then
+        pcall(function()
+            local char = game.Players.LocalPlayer.Character
+            if char and char:FindFirstChildOfClass("Humanoid") then
+                char:FindFirstChildOfClass("Humanoid"):ChangeState("Jumping")
+            end
+        end)
     end
 end)
 
